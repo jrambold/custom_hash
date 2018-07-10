@@ -1,10 +1,12 @@
 
 class HashCustom
-  attr_reader :length
+  attr_reader :size,
+              :length
 
-  def initialize(length=10)
-    @length = length
-    @array = [nil]*length
+  def initialize(size=10)
+    @size = size
+    @array = [nil]*size
+    @length = 0
   end
 
   def put(key, value)
@@ -27,6 +29,7 @@ class HashCustom
       end
       node_index.next = node
     end
+    length += 1
     value
   end
 
@@ -50,14 +53,16 @@ class HashCustom
       false
     else
       if node.key == key
-        @array[index] = nil
+        @array[index] = node.next
+        length -= 1
         true
       else
         while node.next && node.next.key != key
           node = node.next
         end
-        if node.next.key == key
+        if node.next && node.next.key == key
           node.next = node.next.next
+          length -=1
           true
         else
           false
@@ -133,7 +138,7 @@ class HashCustom
     if key.class != String
       key = key.to_s
     end
-    key.sum%length
+    key.sum%size
   end
 
 end
