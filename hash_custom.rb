@@ -1,6 +1,7 @@
-require 'pry'
+
 class HashCustom
   attr_reader :length
+
   def initialize(length=10)
     @length = length
     @array = [nil]*length
